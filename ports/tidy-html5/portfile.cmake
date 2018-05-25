@@ -1,16 +1,19 @@
+set(TIDY_VERSION 5.6.0)
 include(vcpkg_common_functions)
 
-vcpkg_from_github(
-    OUT_SOURCE_PATH SOURCE_PATH
-    REPO htacg/tidy-html5
-    REF 5.4.0
-    SHA512 d92c89f2ef371499f9c3de6f9389783d2449433b4da1f5a29e2eb81b7a7db8dd9f68e220cdde092d446e9bd779bcbc30f84bda79013526540f29d00f438cb402
-    HEAD_REF master)
+set(SOURCE_PATH ${CURRENT_BUILDTREES_DIR}/src/tidy-html5-${TIDY_VERSION})
+vcpkg_download_distfile(ARCHIVE
+    URLS "https://github.com/htacg/tidy-html5/archive/${TIDY_VERSION}.tar.gz"
+    FILENAME "tidy-html5-${TIDY_VERSION}.zip"
+    SHA512 179088a6dbd29bb0e4f0219222f755b186145495f7414f6d0e178803ab67140391283d35352d946f9790c6b1b5b462ee6e24f1cc84f19391cb9b65e73979ffd1)
+
+vcpkg_extract_source_archive(${ARCHIVE})
 
 vcpkg_apply_patches(
     SOURCE_PATH ${SOURCE_PATH}
     PATCHES
     ${CMAKE_CURRENT_LIST_DIR}/remove_execution_character_set.patch
+    ${CMAKE_CURRENT_LIST_DIR}/fixCMakeLists.patch
 )
 
 string(COMPARE EQUAL "${VCPKG_LIBRARY_LINKAGE}" "dynamic" BUILD_SHARED_LIB)
