@@ -1,16 +1,18 @@
 include(vcpkg_common_functions)
-set(SOURCE_PATH ${CURRENT_BUILDTREES_DIR}/src/libbson-1.9.2)
+set(SOURCE_PATH ${CURRENT_BUILDTREES_DIR}/src/libbson-1.9.5)
 
 vcpkg_download_distfile(ARCHIVE
-    URLS "https://github.com/mongodb/libbson/archive/1.9.2.tar.gz"
-    FILENAME "libbson-1.9.2.tar.gz"
-    SHA512 a05f1e8fbabb34e847692397e2e41fc5923ddd18dba861e5ab8a31acdf6738e13ab719eae8f9f8563f08fc43aab5c8d1f53cb6a47c38c96e132fa4a62a48d2bf
+    URLS "https://github.com/mongodb/libbson/archive/1.9.5.tar.gz"
+    FILENAME "libbson-1.9.5.tar.gz"
+    SHA512 14bc75989baac550f42939ea161fa7872b950e5b669dc8f19e897f0783b04e0212e5e722b3fcdf946308b9a68bc066502ed8238dad92e342e5f49b8b2cc8f484
 )
 vcpkg_extract_source_archive(${ARCHIVE})
 
 vcpkg_apply_patches(
     SOURCE_PATH ${SOURCE_PATH}
-    PATCHES ${CMAKE_CURRENT_LIST_DIR}/fix-uwp.patch
+    PATCHES 
+      ${CMAKE_CURRENT_LIST_DIR}/fix-uwp.patch
+      ${CMAKE_CURRENT_LIST_DIR}/fixCMakeLists.patch
 )
 
 if(VCPKG_LIBRARY_LINKAGE STREQUAL "static")
