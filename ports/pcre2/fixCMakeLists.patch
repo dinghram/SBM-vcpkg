@@ -1,0 +1,20 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -84,3 +84,16 @@
+ PROJECT(PCRE2 C)
++
++#########################################################################################################################
++# Set compiler flags
++add_definitions(-DWINVER=0x0601 -D_WIN32_WINNT=0x0601 -DNTDDI_VERSION=0x06010000)
++set(CMAKE_C_FLAGS "/Qspectre /std:c++17 /permissive-")
++
++# Set C++ version
++set(CMAKE_CXX_STANDARD 17)
++
++# Set Windows target platform
++set(CMAKE_SYSTEM_VERSION 10.0.15063.0)
++#########################################################################################################################
++
+
+ # Increased minimum to 2.8.0 to support newer add_test features. Set policy
