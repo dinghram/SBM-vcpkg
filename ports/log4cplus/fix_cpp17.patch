@@ -1,0 +1,11 @@
+diff --git a/src/env.cxx b/src/env.cxx
+--- a/src/env.cxx
++++ b/src/env.cxx
+@@ -210,4 +210,6 @@
+ struct path_sep_comp
+-    : public std::unary_function<tchar, bool>
+ {
++typedef tchar argument_type;
++typedef bool result_type;
++
+     path_sep_comp ()

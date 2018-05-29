@@ -1,27 +1,17 @@
 include(vcpkg_common_functions)
-vcpkg_from_github(
-    OUT_SOURCE_PATH SOURCE_PATH
-    REPO log4cplus/log4cplus
-    REF REL_2_0_0-RC2
-    SHA512  34392d85088534e0661e6fa9726c5970647a5acaa559bafb5d3746a70f5baca01012f457d50c15e73d9aca1d3ed9ec99028cc65fab07f73cdadbbc0b4329bcb5
-    HEAD_REF master
-)
-
-set(THREADPOOL_REF dda9e3d40502e85ce082c05d2c05c1bc94348b6a)
+set(SOURCE_PATH ${CURRENT_BUILDTREES_DIR}/src/log4cplus-2.0.1)
 vcpkg_download_distfile(ARCHIVE
-    URLS "https://github.com/log4cplus/ThreadPool/archive/${THREADPOOL_REF}.tar.gz"
-    FILENAME "log4cplus-threadpool-${THREADPOOL_REF}.tar.gz"
-    SHA512 225adb11f447495a00e401d32f63d9a7eb3a8191d477a21bfa3c39f1ff5cbe8bfb7770a740e840c5748f816137cdef1a5915b17d16b3dd4c3399d1a67ab0f381
+    URLS "https://github.com/log4cplus/log4cplus/releases/download/REL_2_0_1/log4cplus-2.0.1.tar.gz"
+    FILENAME "log4cplus-2.0.1.tar.gz"
+    SHA512 85d7f21c29c34b4d90e19f937646b109a190b535c3900dbe0f51bbf24bbee23d22499b2c896315d0279e3b42d94e3d1e1b4e1ca75746db306f054439642ac899
 )
 vcpkg_extract_source_archive(${ARCHIVE})
 
-file(
-    COPY
-        ${CURRENT_BUILDTREES_DIR}/src/ThreadPool-${THREADPOOL_REF}/COPYING
-        ${CURRENT_BUILDTREES_DIR}/src/ThreadPool-${THREADPOOL_REF}/example.cpp
-        ${CURRENT_BUILDTREES_DIR}/src/ThreadPool-${THREADPOOL_REF}/README.md
-        ${CURRENT_BUILDTREES_DIR}/src/ThreadPool-${THREADPOOL_REF}/ThreadPool.h
-    DESTINATION ${SOURCE_PATH}/threadpool
+vcpkg_apply_patches(
+    SOURCE_PATH ${SOURCE_PATH}
+    PATCHES 
+      ${CMAKE_CURRENT_LIST_DIR}/fixCMakeLists.patch
+      ${CMAKE_CURRENT_LIST_DIR}/fix_cpp17.patch
 )
 
 vcpkg_configure_cmake(
