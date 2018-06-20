@@ -1,12 +1,13 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -26,5 +26,18 @@
+@@ -26,5 +26,19 @@
  project (${LIB_NAME})
 +
 +#########################################################################################################################
 +# Set compiler flags
-+add_definitions(-DWINVER=0x0601 -D_WIN32_WINNT=0x0601 -DNTDDI_VERSION=0x06010000)
++# define DISABLE_DEBUG_LOG to prevent tons of debug logging (in debug) from being written to the console
++add_definitions(-DWINVER=0x0601 -D_WIN32_WINNT=0x0601 -DNTDDI_VERSION=0x06010000 -DDISABLE_DEBUG_LOG)
 +set(CMAKE_C_FLAGS "/Qspectre /std:c++17 /permissive-")
 +
 +# Set C++ version
